@@ -1,0 +1,9 @@
+mysql
+docker/log/*
+!docker/log/.gitkeep
+docker/www/*
+!docker/www/.gitkeep
+docker/nginx/conf/*
+!docker/nginx/conf/.gitkeep
+docker/letsencrypt/*
+.env

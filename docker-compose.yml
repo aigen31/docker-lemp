@@ -1,0 +1,51 @@
+version: '3.8'
+
+services:
+  web:
+    build:
+      context: ./docker
+      dockerfile: web.Dockerfile
+    restart: always
+    volumes:
+      - ./docker/log/nginx:/var/log/nginx
+      - ./docker/nginx/conf:/etc/nginx/conf.d
+      - ./docker/www:/var/www
+      - ./docker/letsencrypt:/etc/letsencrypt
+    depends_on:
+      - php-main
+    ports:
+      - 127.0.0.1:80:80
+    networks:
+      - backend
+
+  php-main:
+    build:
+      context: ./docker
+      dockerfile: php-main.Dockerfile
+    restart: always
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    volumes:
+      - ./docker/www:/var/www
+    networks:
+      - db
+      - backend
+
+  mysql:
+    image: "mysql:${MYSQL_VERSION}"
+    restart: always
+    volumes:
+      - mysql:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD}"
+    ports:
+      - 127.0.0.1:3306:3306
+    networks:
+      - db
+
+networks:
+  backend:
+  db:
+
+volumes:
+  mysql:

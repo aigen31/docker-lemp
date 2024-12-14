@@ -1,0 +1,28 @@
+# Dependency directories
+node_modules
+vendor
+docker/www/**/node_modules
+docker/www/**/vendor
+
+# Build artifacts
+*.log
+*.tmp
+*.swp
+
+# Version control directories
+.git
+.svn
+
+# Configuration files
+.env
+
+# Docker-related files
+docker/php-main.Dockerfile
+docker/web.Dockerfile
+docker-compose.yml
+docker/nginx/conf/*.conf
+docker/www
+docker/letsencrypt
+
+.gitignore
+.DS_Store
